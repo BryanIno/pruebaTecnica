@@ -1,34 +1,47 @@
 <?php
-
 namespace App\Http\Controllers;
+use Illuminate\Http\Request;
 //package para guzzlehttp
 use Illuminate\Support\Facades\Http;
 
 class PersonajesController extends Controller
-{
-    public function index()
+{  
+    public function index(Request $request)
     {
         $response = Http::get('https://rickandmortyapi.com/api/character');
         $data = $response->json();
     
-        // Para revisar si la clave 'results' está presente
-        if (isset($data['results'])) {
-            $personajes = $data['results'];
-    
-            // Ordenamos los personajes alfabéticamente por el nombre
-            usort($personajes, function ($a, $b) {
-                return strcasecmp($a['name'], $b['name']);
+        // Aplicar filtros si se proporcionan en la solicitud
+        if ($request->filled('species')) {
+            $species = $request->input('species');
+            $data['results'] = array_filter($data['results'], function ($personaje) use ($species) {
+                return $personaje['species'] === $species;
             });
-    
-            // enviamos los datos usando compact
-            return view('personajes.index', compact('personajes'));
-        } else {
-            // Si no hay datos, renderizamos la vista sin datos
-            return view('personajes.index');
         }
-    }    
+    
+        if ($request->filled('status')) {
+            $status = $request->input('status');
+            $data['results'] = array_filter($data['results'], function ($personaje) use ($status) {
+                return $personaje['status'] === $status;
+            });
+        }
+    
+        // Ordenar los personajes alfabéticamente por el nombre
+        usort($data['results'], function ($a, $b) {
+            return strcasecmp($a['name'], $b['name']);
+        });
+    
+        // Enviar los datos usando compact
+        return view('personajes.index', compact('data'));
+    }
+    
+    
+    
+    
+//funcion que consume api de un personaje en especifico con el id y retorna el json a la vista
     public function show($id)
     {
+        
         $response = Http::get("https://rickandmortyapi.com/api/character/{$id}");
         $personaje = $response->json();
 

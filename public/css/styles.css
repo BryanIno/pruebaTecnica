@@ -94,3 +94,26 @@ h1 {
 .detalle-tarjeta p:last-child {
     margin-bottom: 0;
 }
+.boton-regreso {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 20px; /* Ajusta según sea necesario */
+}
+
+.boton-regreso:hover {
+    background-color: #45a049;
+}
+
+/* filtros */
+form {
+    margin-left: 30%;
+}
+
+label{
+    color: white;
+    margin-bottom: 10px;
+}

@@ -15,7 +15,7 @@
             <p>Género: {{ $personaje['gender'] }}</p>
             <p>Origen: {{ $personaje['origin']['name'] ?? 'Desconocido' }}</p>
             <p>Ubicación: {{ $personaje['location']['name'] ?? 'Desconocido' }}</p>
-            <p>Episodio: {{ $personaje['episode']['name'] ?? 'Desconocido' }}</p>
+            <a href="{{ route('personaje.index') }}" class="boton-regreso">Volver</a>
         @else
             <p>No se encontraron detalles para este personaje.</p>
         @endisset

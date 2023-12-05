@@ -14,7 +14,8 @@ use App\Http\Controllers\PersonajesController;
 */
 
 
+//rutas para index donde vemos todos los personajes y la de ver detalles
 
-Route::get('/', [PersonajesController::class, 'index']);
+Route::get('/', [PersonajesController::class, 'index'])->name('personaje.index');
 Route::get('/personaje/{id}', [PersonajesController::class, 'show'])->name('personaje.show');
 
